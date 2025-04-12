@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -26,6 +27,8 @@ public class CaveGame : Game
 
     private int mapSize = 50;
     private int[,] grid;
+    private int[,] baked;
+    private List<Vector2> lights;
     private Vector2 player;
 
 
@@ -64,8 +67,15 @@ public class CaveGame : Game
         };
 
         grid = GenCave(250);
+        lights = new List<Vector2>()
+        {
+            // new Vector2(mapSize/2, mapSize/2)
+            player
+        };
 
         player = new Vector2(mapSize / 2, mapSize / 2);
+
+        BakeLights();
 
         base.Initialize();
     }
@@ -106,6 +116,9 @@ public class CaveGame : Game
         if (state.IsKeyDown(Keys.S) && !oldState.IsKeyDown(Keys.S))
             if (grid[(int)player.Y+1, (int)player.X] == 0)
                 player.Y++;
+
+        if (!state.IsKeyDown(Keys.None))
+            BakeLights();
             
         /* if (state.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left))
             if (grid[(int)player.Y, (int)player.X-1] == 0)
@@ -140,7 +153,7 @@ public class CaveGame : Game
             // Draw grid
             for(int y = 0; y < mapSize; y++)
                 for(int x = 0; x < mapSize; x++)
-                    spriteBatch.Draw(atlas, new Rectangle(x*gameScale, y*gameScale, gameScale, gameScale), sources[grid[y, x]], Color.White);
+                    spriteBatch.Draw(atlas, new Rectangle(x*gameScale, y*gameScale, gameScale, gameScale), sources[grid[y, x]], Color.White * ((float)baked[y, x] / 8));
 
             // Draw player
             spriteBatch.Draw(square, new Rectangle((int)player.X*gameScale, (int)player.Y*gameScale, gameScale , gameScale), Color.White);
@@ -157,7 +170,7 @@ public class CaveGame : Game
         base.Draw(gameTime);
     }
 
-    public int[,] GenCave(int dungeonSize)
+    protected int[,] GenCave(int dungeonSize)
     {
         int counter = 1;
         int[,] arr = new int[mapSize, mapSize];
@@ -181,7 +194,7 @@ public class CaveGame : Game
             }
     }
 
-    public int[,] SmoothCave()
+    protected int[,] SmoothCave()
     {
         int[][] offsets = {
             new[]{-1,-1},
@@ -215,5 +228,61 @@ public class CaveGame : Game
             }
 
         return arr;
+    }
+
+    protected void BakeLights()
+    {
+        baked = new int[mapSize, mapSize];
+
+        foreach(Vector2 light in lights)
+        {
+            LightUp(player, 8);
+        }
+        
+        for(int y = 0; y < mapSize; y++)
+        {
+            for(int x = 0; x < mapSize; x++)
+                Console.Write(baked[y, x] + " ");
+            Console.WriteLine();
+        }
+    }
+
+    protected void LightUp(Vector2 pos, int strength, bool split = true)
+    {
+        if (strength == 0)
+            return;
+
+        for(int i = strength; i >= 0; i--)
+        {
+
+            if (split)
+            {
+                Vector2 newPos = pos + new Vector2(0, 1) * (strength - i);
+                if (newPos.Y >= mapSize)
+                    break;
+
+                baked[(int)newPos.Y, (int)newPos.X] = i;
+                LightUp(newPos, i, false);
+            }
+            else if (pos.X + strength - i <= 0)
+                break;
+            else baked[(int)pos.Y, (int)pos.X + strength - i] = i;
+        }
+        
+        for(int i = strength; i >= 0; i--)
+        {
+            if (split)
+            {
+                Vector2 newPos = pos - new Vector2(0, 1) * (strength - i);
+                if (newPos.Y <= 0)
+                    break;
+
+                baked[(int)newPos.Y, (int)newPos.X] = i;
+                LightUp(newPos, i, false);
+            }
+            else if (pos.X - strength + i >= mapSize)
+                break;
+            else baked[(int)pos.Y, (int)pos.X - strength + i] = i;
+        }
     }
 }
