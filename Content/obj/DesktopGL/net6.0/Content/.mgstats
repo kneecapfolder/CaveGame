@@ -1,4 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/fonts/Counter.spritefont","C:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/bin/DesktopGL/Content/fonts/Counter.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.2932572
-"C:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/sprites/darkredshit.png","C:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/bin/DesktopGL/Content/sprites/darkredshit.xnb","TextureProcessor","Texture2DContent",1866228,16000085,0.4188604
-"C:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/sprites/SmileyWalk.png","C:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/bin/DesktopGL/Content/sprites/SmileyWalk.xnb","TextureProcessor","Texture2DContent",40026,262229,0.0951119
+"C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/Counter.spritefont","C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/Content/fonts/Counter.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.1680043
+"C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/stone pack.png","C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/Content/sprites/stone pack.xnb","TextureProcessor","Texture2DContent",655,2133,0.1025516

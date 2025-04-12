@@ -1,4 +1,5 @@
 using System;
+using Dungeon;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -43,10 +44,10 @@ public class Walker
                 break;
         }
 
-        if (grid[(int)Pos.Y, (int)Pos.X] == 0)
+        if (grid[(int)Pos.Y, (int)Pos.X] != 0)
             counter++;
 
-        grid[(int)Pos.Y, (int)Pos.X] = 1;
+        grid[(int)Pos.Y, (int)Pos.X] = 0;
     }
 }
 
@@ -85,5 +86,33 @@ public class AnimatedSprite
         Rectangle dest = new Rectangle((int)pos.X, (int)pos.Y, width, height);
 
         spriteBatch.Draw(Texture, dest, source, Color.White);
+    }
+}
+
+public class Camera
+{
+    public Matrix Transform { get; private set; }
+    public float Zoom { get; set; }
+
+    public Camera(float zoom)
+    {
+        Zoom = zoom;
+    }
+
+    public void Follow(Vector2 obj)
+    {
+        Matrix pos = Matrix.CreateTranslation(
+          - obj.X * CaveGame.gameScale - 8,
+          - obj.Y * CaveGame.gameScale - 8,
+            0
+        );
+
+        Matrix offset = Matrix.CreateTranslation(
+            CaveGame.width / 2 / Zoom,
+            CaveGame.height / 2 / Zoom,
+            0
+        );
+
+        Transform = pos * offset * Matrix.CreateScale(Zoom);
     }
 }
