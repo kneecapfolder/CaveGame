@@ -4,8 +4,8 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/fonts/Counter.spritefont</File>
-    <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/sprites/stone pack.png</File>
+    <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/Counter.spritefont</File>
+    <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/stone pack.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

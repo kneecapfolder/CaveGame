@@ -116,3 +116,15 @@ public class Camera
         Transform = pos * offset * Matrix.CreateScale(Zoom);
     }
 }
+
+public class Player
+{
+    private static int[,] grid;
+    public Vector2 pos;
+
+    public Player(Vector2 pos, int[,] grid)
+    {
+        Player.grid = grid;
+        this.pos = pos;
+    }
+}

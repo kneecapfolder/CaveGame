@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>c:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/sprites/stone pack.png</SourceFile>
-  <SourceTime>2025-04-12T16:23:21.7839782+03:00</SourceTime>
-  <DestFile>c:/Users/ilan7/OneDrive/Plocha/projects/C#/Dungeon/Content/bin/DesktopGL/sprites/stone pack.xnb</DestFile>
-  <DestTime>2025-04-12T16:24:28.8820873+03:00</DestTime>
+  <SourceFile>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/stone pack.png</SourceFile>
+  <SourceTime>2025-04-12T18:01:34.1249984+03:00</SourceTime>
+  <DestFile>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/sprites/stone pack.xnb</DestFile>
+  <DestTime>2025-04-13T10:32:08.120746+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T14:44:56+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

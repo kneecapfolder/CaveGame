@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,11 +11,11 @@ public class CaveGame : Game
     public static int gameScale = 16;
     public static int width;
     public static int height;
-    
+
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     private SpriteFont font;
-    
+
 
     private Camera camera;
     private Random rnd;
@@ -29,7 +28,7 @@ public class CaveGame : Game
     private int[,] grid;
     private int[,] baked;
     private List<Vector2> lights;
-    private Vector2 player;
+    private Player player;
 
 
     public CaveGame()
@@ -49,7 +48,7 @@ public class CaveGame : Game
         graphics.PreferredBackBufferHeight = height;
         graphics.ApplyChanges();
 
-        camera = new Camera(5f);
+        camera = new Camera(4f);
 
         rnd = new Random();
 
@@ -67,13 +66,9 @@ public class CaveGame : Game
         };
 
         grid = GenCave(250);
-        lights = new List<Vector2>()
-        {
-            // new Vector2(mapSize/2, mapSize/2)
-            player
-        };
+        lights = new List<Vector2>();
 
-        player = new Vector2(mapSize / 2, mapSize / 2);
+        player = new Player(new Vector2(mapSize / 2, mapSize / 2), grid);
 
         BakeLights();
 
@@ -99,43 +94,48 @@ public class CaveGame : Game
 
         if (state.IsKeyDown(Keys.Space) && !oldState.IsKeyDown(Keys.Space))
             grid = SmoothCave();
-            
+
         if (state.IsKeyDown(Keys.R) && !oldState.IsKeyDown(Keys.R))
             grid = GenCave(400);
-            
+
         // Player movement
         if (state.IsKeyDown(Keys.A) && !oldState.IsKeyDown(Keys.A))
-            if (grid[(int)player.Y, (int)player.X-1] == 0)
-                player.X--;
+            if (player.pos.X - 1 > 0 && grid[(int)player.pos.Y, (int)player.pos.X - 1] == 0)
+                player.pos.X--;
         if (state.IsKeyDown(Keys.D) && !oldState.IsKeyDown(Keys.D))
-            if (grid[(int)player.Y, (int)player.X+1] == 0)
-                player.X++;
+            if (player.pos.X + 1 < mapSize && grid[(int)player.pos.Y, (int)player.pos.X + 1] == 0)
+                player.pos.X++;
         if (state.IsKeyDown(Keys.W) && !oldState.IsKeyDown(Keys.W))
-            if (grid[(int)player.Y-1, (int)player.X] == 0)
-                player.Y--;
+            if (player.pos.Y - 1 > 0 && grid[(int)player.pos.Y - 1, (int)player.pos.X] == 0)
+                player.pos.Y--;
         if (state.IsKeyDown(Keys.S) && !oldState.IsKeyDown(Keys.S))
-            if (grid[(int)player.Y+1, (int)player.X] == 0)
-                player.Y++;
+            if (player.pos.Y + 1 < mapSize && grid[(int)player.pos.Y + 1, (int)player.pos.X] == 0)
+                player.pos.Y++;
 
-        if (!state.IsKeyDown(Keys.None))
-            BakeLights();
-            
-        /* if (state.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left))
-            if (grid[(int)player.Y, (int)player.X-1] == 0)
-                player.X--;
+        // Mine
+        if (state.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left))
+            if (player.pos.X - 1 > 0)
+                grid[(int)player.pos.Y, (int)player.pos.X - 1] = 0;
+
         if (state.IsKeyDown(Keys.Right) && !oldState.IsKeyDown(Keys.Right))
-            if (grid[(int)player.Y, (int)player.X+1] == 0)
-                player.X++;
+            if (player.pos.X < mapSize - 1)
+                grid[(int)player.pos.Y, (int)player.pos.X + 1] = 0;
+
         if (state.IsKeyDown(Keys.Up) && !oldState.IsKeyDown(Keys.Up))
-            if (grid[(int)player.Y-1, (int)player.X] == 0)
-                player.Y--;
+            if (player.pos.Y > 0)
+                grid[(int)player.pos.Y - 1, (int)player.pos.X] = 0;
+
         if (state.IsKeyDown(Keys.Down) && !oldState.IsKeyDown(Keys.Down))
-            if (grid[(int)player.Y+1, (int)player.X] == 0)
-                player.Y++; */
+            if (player.pos.Y < mapSize - 1)
+                grid[(int)player.pos.Y + 1, (int)player.pos.X] = 0;
+
+
+        if (state.GetPressedKeyCount() != 0)
+            BakeLights();
 
         oldState = state;
 
-        camera.Follow(player);
+        camera.Follow(player.pos);
 
         base.Update(gameTime);
     }
@@ -149,21 +149,21 @@ public class CaveGame : Game
             samplerState: SamplerState.PointClamp,
             transformMatrix: camera.Transform
         );
-    
-            // Draw grid
-            for(int y = 0; y < mapSize; y++)
-                for(int x = 0; x < mapSize; x++)
-                    spriteBatch.Draw(atlas, new Rectangle(x*gameScale, y*gameScale, gameScale, gameScale), sources[grid[y, x]], Color.White * ((float)baked[y, x] / 8));
 
-            // Draw player
-            spriteBatch.Draw(square, new Rectangle((int)player.X*gameScale, (int)player.Y*gameScale, gameScale , gameScale), Color.White);
+        // Draw grid
+        for (int y = 0; y < mapSize; y++)
+            for (int x = 0; x < mapSize; x++)
+                spriteBatch.Draw(atlas, new Rectangle(x * gameScale, y * gameScale, gameScale, gameScale), sources[grid[y, x]], Color.White * ((float)baked[y, x] / 8));
+
+        // Draw player
+        spriteBatch.Draw(square, new Rectangle((int)player.pos.X * gameScale, (int)player.pos.Y * gameScale, gameScale, gameScale), Color.White);
 
         spriteBatch.End();
 
         // Draw UI
         spriteBatch.Begin();
 
-            spriteBatch.DrawString(font, $"examp", new Vector2(2, 0), Color.White);
+        spriteBatch.DrawString(font, $"examp", new Vector2(2, 0), Color.White);
 
         spriteBatch.End();
 
@@ -174,19 +174,19 @@ public class CaveGame : Game
     {
         int counter = 1;
         int[,] arr = new int[mapSize, mapSize];
-        for(int y = 0; y < mapSize; y++)
-            for(int x = 0; x < mapSize; x++)
-                arr[y, x] = rnd.Next(5)+1;
+        for (int y = 0; y < mapSize; y++)
+            for (int x = 0; x < mapSize; x++)
+                arr[y, x] = rnd.Next(5) + 1;
         arr[mapSize / 2, mapSize / 2] = 0;
         Walker[] walkers = new Walker[5];
 
 
-        for(int i = 0; i < walkers.Length; i++)
+        for (int i = 0; i < walkers.Length; i++)
             walkers[i] = new Walker(new Vector2(mapSize / 2, mapSize / 2));
 
 
-        while(true)
-            for(int i = 0; i < walkers.Length; i++)
+        while (true)
+            for (int i = 0; i < walkers.Length; i++)
             {
                 if (counter >= dungeonSize)
                     return arr;
@@ -208,23 +208,23 @@ public class CaveGame : Game
         };
 
         int[,] arr = new int[mapSize, mapSize];
-        for(int y = 0; y < mapSize; y++)
-            for(int x = 0; x < mapSize; x++)
+        for (int y = 0; y < mapSize; y++)
+            for (int x = 0; x < mapSize; x++)
             {
                 int neighbours = 0;
-                foreach(int[] offset in offsets)
+                foreach (int[] offset in offsets)
                 {
-                    if ((x == 0 && offset[0] == -1) || (x == mapSize-1 && offset[0] == 1)
-                    ||(y == 0 && offset[1] == -1) || (y == mapSize-1 && offset[1] == 1))
+                    if ((x == 0 && offset[0] == -1) || (x == mapSize - 1 && offset[0] == 1)
+                    || (y == 0 && offset[1] == -1) || (y == mapSize - 1 && offset[1] == 1))
                         continue;
 
                     if (grid[y + offset[1], x + offset[0]] == 0)
                         neighbours++;
                 }
-                
+
                 if (neighbours > 4)
                     arr[y, x] = 0;
-                else arr[y, x] = rnd.Next(5)+1;
+                else arr[y, x] = rnd.Next(5) + 1;
             }
 
         return arr;
@@ -234,55 +234,41 @@ public class CaveGame : Game
     {
         baked = new int[mapSize, mapSize];
 
-        foreach(Vector2 light in lights)
-        {
-            LightUp(player, 8);
-        }
-        
-        for(int y = 0; y < mapSize; y++)
+        LightUp(player.pos, 5);
+
+        foreach (Vector2 light in lights)
+            LightUp(light, 8);
+
+        /* for(int y = 0; y < mapSize; y++)
         {
             for(int x = 0; x < mapSize; x++)
                 Console.Write(baked[y, x] + " ");
             Console.WriteLine();
-        }
+        } */
     }
 
-    protected void LightUp(Vector2 pos, int strength, bool split = true)
+    protected void LightUp(Vector2 pos, int strength, Vector2? prev = null)
     {
-        if (strength == 0)
+        if (pos.X <= 0 || pos.X >= mapSize || pos.Y <= 0 || pos.Y >= mapSize)
             return;
 
-        for(int i = strength; i >= 0; i--)
+        if (strength == 0 || baked[(int)pos.Y, (int)pos.X] >= strength)
+            return;
+
+        baked[(int)pos.Y, (int)pos.X] = strength;
+
+        if (grid[(int)pos.Y, (int)pos.X] != 0)
+            return;
+
+        Vector2[] offsets = new Vector2[]
         {
-
-            if (split)
-            {
-                Vector2 newPos = pos + new Vector2(0, 1) * (strength - i);
-                if (newPos.Y >= mapSize)
-                    break;
-
-                baked[(int)newPos.Y, (int)newPos.X] = i;
-                LightUp(newPos, i, false);
-            }
-            else if (pos.X + strength - i <= 0)
-                break;
-            else baked[(int)pos.Y, (int)pos.X + strength - i] = i;
-        }
-        
-        for(int i = strength; i >= 0; i--)
-        {
-            if (split)
-            {
-                Vector2 newPos = pos - new Vector2(0, 1) * (strength - i);
-                if (newPos.Y <= 0)
-                    break;
-
-                baked[(int)newPos.Y, (int)newPos.X] = i;
-                LightUp(newPos, i, false);
-            }
-            else if (pos.X - strength + i >= mapSize)
-                break;
-            else baked[(int)pos.Y, (int)pos.X - strength + i] = i;
-        }
+            new Vector2(1, 0),
+            new Vector2(-1, 0),
+            new Vector2(0, 1),
+            new Vector2(0, -1)
+        };
+        foreach (Vector2 offset in offsets)
+            if (pos + offset != prev)
+                LightUp(pos + offset, strength - 1, pos);
     }
 }
