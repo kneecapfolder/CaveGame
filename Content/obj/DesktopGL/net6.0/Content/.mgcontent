@@ -4,10 +4,12 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/Counter.spritefont</File>
+    <File>C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/HUD.spritefont</File>
+    <File>C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/Menu.spritefont</File>
     <File>C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/stone pack.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

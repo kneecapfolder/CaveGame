@@ -13,12 +13,19 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin fonts/Counter.spritefont
+#begin fonts/HUD.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/Counter.spritefont
+/build:fonts/HUD.spritefont
+
+#begin fonts/Menu.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/Menu.spritefont
 
 #begin sprites/stone pack.png
 /importer:TextureImporter

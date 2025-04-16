@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/Counter.spritefont</SourceFile>
-  <SourceTime>2025-04-16T03:46:13.3204203+03:00</SourceTime>
-  <DestFile>C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/Content/fonts/Counter.xnb</DestFile>
-  <DestTime>2025-04-16T03:46:49.1703473+03:00</DestTime>
+  <SourceFile>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/HUD.spritefont</SourceFile>
+  <SourceTime>2022-07-26T14:44:10+03:00</SourceTime>
+  <DestFile>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/fonts/HUD.xnb</DestFile>
+  <DestTime>2025-04-16T04:05:21.9990417+03:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2022-07-26T14:44:56+03:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

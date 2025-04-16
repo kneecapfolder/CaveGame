@@ -1,2 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/Counter.spritefont","C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/Content/fonts/Counter.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.1680043
+"C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/HUD.spritefont","C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/Content/fonts/HUD.xnb","FontDescriptionProcessor","SpriteFontContent",2070,37919,0.1689065
+"C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/Menu.spritefont","C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/Content/fonts/Menu.xnb","FontDescriptionProcessor","SpriteFontContent",2070,267295,0.024339
+"C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/stone pack.png","C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/Content/sprites/stone pack.xnb","TextureProcessor","Texture2DContent",686,3157,0.0945688

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/stone pack.png</SourceFile>
-  <SourceTime>2025-04-12T18:01:34.1249984+03:00</SourceTime>
+  <SourceTime>2025-04-13T20:34:28.5425887+03:00</SourceTime>
   <DestFile>C:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/bin/DesktopGL/Content/sprites/stone pack.xnb</DestFile>
-  <DestTime>2025-04-12T18:01:39.4373235+03:00</DestTime>
+  <DestTime>2025-04-13T20:34:36.82487+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T14:44:56+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
