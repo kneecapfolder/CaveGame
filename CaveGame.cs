@@ -16,16 +16,21 @@ public class CaveGame : Game
     public static List<Vector2> lights;
     public static int[,] grid;
     public static int[,] baked;
+    public static Random rnd;
 
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     private SpriteFont fontMenu;
     private SpriteFont fontHUD;
 
-    private Camera camera;
-    private Random rnd;
+    // Textures
     private Texture2D square;
     private Texture2D atlas;
+    private Texture2D ui;
+    private Texture2D bgArt;
+    private Texture2D logo;
+
+    private Camera camera;
     private Dictionary<int, Rectangle> sources;
     private KeyboardState oldState;
 
@@ -38,11 +43,13 @@ public class CaveGame : Game
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
+        IsMouseVisible = false;
     }
 
     protected override void Initialize()
     {
+        Window.Title = "CaveGame";
+
         width = mapSize * gameScale;
         height = mapSize * gameScale;
 
@@ -53,7 +60,7 @@ public class CaveGame : Game
 
         sources = new Dictionary<int, Rectangle>()
         {
-            { 0, new Rectangle(16, 0, 8, 8) },
+            { 0, new Rectangle(8, 0, 8, 8) },
             { 1, new Rectangle(0, 0, 8, 8) },
             { 2, new Rectangle(0, 8, 8, 8) },
             { 3, new Rectangle(8, 8, 8, 8) },
@@ -63,8 +70,6 @@ public class CaveGame : Game
         };
 
         grid = new int[mapSize, mapSize];
-
-        camera = new Camera(4f);
 
         rnd = new Random();
 
@@ -91,6 +96,9 @@ public class CaveGame : Game
         fontMenu = Content.Load<SpriteFont>("fonts/Menu");
         fontHUD = Content.Load<SpriteFont>("fonts/Hud");
         atlas = Content.Load<Texture2D>("sprites/stone pack");
+        ui = Content.Load<Texture2D>("sprites/ui");
+        bgArt = Content.Load<Texture2D>("sprites/mainscreen art");
+        logo = Content.Load<Texture2D>("sprites/logo");
     }
 
     protected override void Update(GameTime gameTime)
@@ -150,12 +158,35 @@ public class CaveGame : Game
         }
 
         // Draw UI
-        spriteBatch.Begin();
+        spriteBatch.Begin(
+            samplerState: SamplerState.PointClamp
+        );
 
         if (gameState == 1)
+        {
             spriteBatch.DrawString(fontHUD, "Inventory: " + new string[]{ "pickaxe", "torch" }[player.itemIndex], new Vector2(10, height-30), Color.White);
-        else mainMenu.Draw(spriteBatch, fontMenu, 300);
             
+            // Inventory
+            int cellNum = ui.Width / 20;
+            for(int i = 0; i < cellNum; i++)
+                spriteBatch.Draw(ui, new Rectangle(width/2 - (int)((cellNum/2f-i)*100), 0, 100, 100), new Rectangle(i*20, 0, 20, 20), i == player.itemIndex? Color.White: Color.Gray*.5f);
+            // spriteBatch.Draw(square, new Rectangle(width/2-5, 0, 10, 10), Color.Red); // Center marker
+        }
+        else 
+        {
+            spriteBatch.Draw(bgArt, new Rectangle(0, 0, width, height), Color.White*.5f);
+
+            int logoScale = 8;
+            double angle = 2*(gameTime.TotalGameTime.Seconds+gameTime.TotalGameTime.Milliseconds/1000f);
+            // spriteBatch.DrawString(fontHUD, gameTime.TotalGameTime.Milliseconds.ToString(), new Vector2(20, 20), Color.White);
+            spriteBatch.Draw(
+                logo, new Rectangle(width/2, 230-(int)(Math.Sin(angle*2)*30), logo.Width*logoScale, logo.Height*logoScale),
+                new Rectangle(0, 0, logo.Width, logo.Height), Color.White,
+                (float)(Math.Cos(angle*3)*10*Math.PI/180),
+                new Vector2(logo.Width/2, logo.Height/2), SpriteEffects.None, 0
+            );
+            mainMenu.Draw(spriteBatch, fontMenu, 400);
+        }
 
         spriteBatch.End();
 
@@ -249,7 +280,7 @@ public class CaveGame : Game
         baked[(int)pos.Y, (int)pos.X] = strength;
 
         if (grid[(int)pos.Y, (int)pos.X] != 0)
-            return;
+            strength -= 3;
 
         Vector2[] offsets = new Vector2[]
         {
@@ -266,8 +297,11 @@ public class CaveGame : Game
     public void Start()
     {
         grid = GenCave(250);
+        grid = SmoothCave();
+        grid = SmoothCave();
         lights = new List<Vector2>();
         player = new Player(new Vector2(mapSize / 2, mapSize / 2));
+        camera = new Camera(4f, player.pos);
         BakeLights();
         gameState = 1;
     }

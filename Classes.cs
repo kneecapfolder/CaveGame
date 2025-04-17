@@ -8,12 +8,10 @@ using Microsoft.Xna.Framework.Input;
 public class Walker
 {
     public Vector2 Pos;
-    private Random rnd;
 
     public Walker(Vector2 pos)
     {
         Pos = pos;
-        rnd = new Random();
     }
 
     public void Walk(int[,] grid, ref int counter, int dungeonSize, int mapSize)
@@ -21,7 +19,7 @@ public class Walker
         if (counter >= dungeonSize)
             return;
 
-        int dir = rnd.Next(4);
+        int dir = CaveGame.rnd.Next(4);
         switch(dir)
         {
             case 0:
@@ -95,19 +93,26 @@ public class Camera
 {
     public Matrix Transform { get; private set; }
     public float Zoom { get; set; }
+    private Vector2 camPos;
 
-    public Camera(float zoom)
+    public Camera(float zoom, Vector2 startPos)
     {
         Zoom = zoom;
+        camPos = startPos;
     }
 
-    public void Follow(Vector2 obj)
+    public void Follow(Vector2 obj) 
     {
-        Matrix pos = Matrix.CreateTranslation(
-          - obj.X * CaveGame.gameScale - 8,
-          - obj.Y * CaveGame.gameScale - 8,
-            0
+        Vector2 lerped = Vector2.Lerp(
+            camPos, new Vector2(obj.X * CaveGame.gameScale - 8, obj.Y * CaveGame.gameScale - 8), .05f
         );
+
+        Matrix pos = Matrix.CreateTranslation(
+            - lerped.X,
+            - lerped.Y, 0
+        );
+
+        camPos = lerped;
 
         Matrix offset = Matrix.CreateTranslation(
             CaveGame.width / 2 / Zoom,
@@ -174,7 +179,8 @@ public class Player
     {
         if (itemIndex == 0)
         {
-            CaveGame.grid[y, x] = 0;
+            if (CaveGame.grid[y, x] != 0)
+                CaveGame.grid[y, x] = 0;
             if (CaveGame.lights.Contains(new Vector2(x, y)))
                 CaveGame.lights.Remove(new Vector2(x, y));
             return;
@@ -218,7 +224,7 @@ public class Menu
     public void Draw(SpriteBatch spriteBatch, SpriteFont font, int yOffset)
     {
         for(int i = 0; i < buttons.Length; i++)
-            spriteBatch.DrawString(font, buttons[i].name, new Vector2(CaveGame.width/2 - buttons[i].name.Length*15, yOffset + i * 100), i == index? Color.Yellow: Color.White);
+            spriteBatch.DrawString(font, buttons[i].name, new Vector2(CaveGame.width/2 - font.MeasureString(buttons[i].name).X/2, yOffset + i * 100), i == index? Color.Yellow: Color.White*.5f);
     }
 }
 

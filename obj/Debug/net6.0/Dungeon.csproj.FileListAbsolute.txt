@@ -26,8 +26,6 @@ C:\Users\ilan7\OneDrive\Plocha\projects\C#\Dungeon\obj\Debug\net6.0\ref\Dungeon.
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\Dungeon\bin\Debug\net6.0\Content\sprites\darkredshit.xnb
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\Dungeon\bin\Debug\net6.0\Content\fonts\Counter.xnb
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\Dungeon\bin\Debug\net6.0\Content\sprites\SmileyWalk.xnb
-c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\darkredshit.xnb
-c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\SmileyWalk.xnb
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\stone pack.xnb
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Dungeon.exe
 C:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Dungeon.deps.json
@@ -57,3 +55,6 @@ C:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\obj\Debug\net6.0\Dungeon.gen
 C:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\obj\Debug\net6.0\ref\Dungeon.dll
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\fonts\HUD.xnb
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\fonts\Menu.xnb
+c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\logo.xnb
+c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\mainscreen art.xnb
+c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\ui.xnb
