@@ -58,3 +58,4 @@ c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\fon
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\logo.xnb
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\mainscreen art.xnb
 c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\ui.xnb
+c:\Users\ilan7\OneDrive\Plocha\projects\C#\CaveGame\bin\Debug\net6.0\Content\sprites\player.xnb

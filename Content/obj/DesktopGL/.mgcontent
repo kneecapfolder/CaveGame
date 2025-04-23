@@ -8,10 +8,12 @@
     <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/fonts/Menu.spritefont</File>
     <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/logo.png</File>
     <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/mainscreen art.png</File>
+    <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/player.png</File>
     <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/stone pack.png</File>
     <File>c:/Users/ilan7/OneDrive/Plocha/projects/C#/CaveGame/Content/sprites/ui.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

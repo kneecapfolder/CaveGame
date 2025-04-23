@@ -128,6 +128,7 @@ public class Player
 {
     public Vector2 pos;
     public int itemIndex;
+    private int dir = 0; // 0 - front | 1 - right | 2 - back | 3 - left
 
     public Player(Vector2 pos)
     {
@@ -140,16 +141,28 @@ public class Player
         // Movement
         if (state.IsKeyDown(Keys.A) && !oldState.IsKeyDown(Keys.A))
             if (pos.X - 1 > 0 && CaveGame.grid[(int)pos.Y, (int)pos.X - 1] == 0)
-                pos.X--;
+                {
+                    pos.X--;
+                    dir = 3;
+                }
         if (state.IsKeyDown(Keys.D) && !oldState.IsKeyDown(Keys.D))
             if (pos.X + 1 < CaveGame.mapSize && CaveGame.grid[(int)pos.Y, (int)pos.X + 1] == 0)
-                pos.X++;
+                {
+                    pos.X++;
+                    dir = 1;
+                }
         if (state.IsKeyDown(Keys.W) && !oldState.IsKeyDown(Keys.W))
             if (pos.Y - 1 > 0 && CaveGame.grid[(int)pos.Y - 1, (int)pos.X] == 0)
-                pos.Y--;
+                {
+                    pos.Y--;
+                    dir = 2;
+                }
         if (state.IsKeyDown(Keys.S) && !oldState.IsKeyDown(Keys.S))
             if (pos.Y + 1 < CaveGame.mapSize && CaveGame.grid[(int)pos.Y + 1, (int)pos.X] == 0)
-                pos.Y++;
+                {
+                    pos.Y++;
+                    dir = 0;
+                }
 
         // Interaction
         if (state.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left))
@@ -173,6 +186,8 @@ public class Player
             itemIndex = 0;
         if (state.IsKeyDown(Keys.D2) && !oldState.IsKeyDown(Keys.D2))
             itemIndex = 1;
+        if (state.IsKeyDown(Keys.D3) && !oldState.IsKeyDown(Keys.D3))
+            itemIndex = 2;
     }
 
     public void Interact(int y, int x)
@@ -185,7 +200,7 @@ public class Player
                 CaveGame.lights.Remove(new Vector2(x, y));
             return;
         }
-        else if (CaveGame.grid[y, x] != 0)
+        else if (CaveGame.grid[y, x] != 0 || CaveGame.lights.Contains(new Vector2(x, y)))
             return;
 
         switch(itemIndex)
@@ -193,7 +208,19 @@ public class Player
             case 1: // Torch
                 CaveGame.lights.Add(new Vector2(x, y));
                 break;
+
+            case 2: // Wooden Box
+                CaveGame.grid[y, x] = 7;
+                break;
         }
+    }
+
+    public void Draw(SpriteBatch spriteBatch, Texture2D texture)
+    {
+        spriteBatch.Draw(
+            texture, new Rectangle((int)pos.X * CaveGame.gameScale, (int)pos.Y * CaveGame.gameScale, CaveGame.gameScale, CaveGame.gameScale),
+            new Rectangle(dir * 8, 0, 8, 8), Color.White
+        );
     }
 }
 

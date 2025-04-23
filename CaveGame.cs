@@ -27,6 +27,7 @@ public class CaveGame : Game
     private Texture2D square;
     private Texture2D atlas;
     private Texture2D ui;
+    private Texture2D playerTex;
     private Texture2D bgArt;
     private Texture2D logo;
 
@@ -60,13 +61,14 @@ public class CaveGame : Game
 
         sources = new Dictionary<int, Rectangle>()
         {
-            { 0, new Rectangle(8, 0, 8, 8) },
-            { 1, new Rectangle(0, 0, 8, 8) },
-            { 2, new Rectangle(0, 8, 8, 8) },
-            { 3, new Rectangle(8, 8, 8, 8) },
-            { 4, new Rectangle(16, 8, 8, 8) },
-            { 5, new Rectangle(24, 8, 8, 8) },
-            { 6, new Rectangle(0, 16, 8, 8) }
+            { 0, new Rectangle(8, 0, 8, 8) }, // Floor
+            { 1, new Rectangle(0, 0, 8, 8) }, // Stone
+            { 2, new Rectangle(0, 8, 8, 8) }, // Emerald
+            { 3, new Rectangle(8, 8, 8, 8) }, // Ruby
+            { 4, new Rectangle(16, 8, 8, 8) }, // Diamond
+            { 5, new Rectangle(24, 8, 8, 8) }, // Topaz
+            { 6, new Rectangle(0, 16, 8, 8) }, // Torch
+            { 7, new Rectangle(16, 0, 8, 8) } // Wooden Box
         };
 
         grid = new int[mapSize, mapSize];
@@ -97,6 +99,7 @@ public class CaveGame : Game
         fontHUD = Content.Load<SpriteFont>("fonts/Hud");
         atlas = Content.Load<Texture2D>("sprites/stone pack");
         ui = Content.Load<Texture2D>("sprites/ui");
+        playerTex = Content.Load<Texture2D>("sprites/player");
         bgArt = Content.Load<Texture2D>("sprites/mainscreen art");
         logo = Content.Load<Texture2D>("sprites/logo");
     }
@@ -152,7 +155,8 @@ public class CaveGame : Game
                 spriteBatch.Draw(atlas, new Rectangle((int)light.X * gameScale, (int)light.Y * gameScale, gameScale, gameScale), sources[6], Color.White);
 
             // Draw player
-            spriteBatch.Draw(square, new Rectangle((int)player.pos.X * gameScale, (int)player.pos.Y * gameScale, gameScale, gameScale), Color.White);
+            player.Draw(spriteBatch, playerTex);
+            // spriteBatch.Draw(square, new Rectangle((int)player.pos.X * gameScale, (int)player.pos.Y * gameScale, gameScale, gameScale), Color.White);
 
             spriteBatch.End();
         }
@@ -164,7 +168,7 @@ public class CaveGame : Game
 
         if (gameState == 1)
         {
-            spriteBatch.DrawString(fontHUD, "Inventory: " + new string[]{ "pickaxe", "torch" }[player.itemIndex], new Vector2(10, height-30), Color.White);
+            spriteBatch.DrawString(fontHUD, "Inventory: " + new string[]{ "pickaxe", "torch", "wooden box" }[player.itemIndex], new Vector2(10, height-30), Color.White);
             
             // Inventory
             int cellNum = ui.Width / 20;
@@ -176,6 +180,7 @@ public class CaveGame : Game
         {
             spriteBatch.Draw(bgArt, new Rectangle(0, 0, width, height), Color.White*.5f);
 
+            // Draw logo
             int logoScale = 8;
             double angle = 2*(gameTime.TotalGameTime.Seconds+gameTime.TotalGameTime.Milliseconds/1000f);
             // spriteBatch.DrawString(fontHUD, gameTime.TotalGameTime.Milliseconds.ToString(), new Vector2(20, 20), Color.White);
